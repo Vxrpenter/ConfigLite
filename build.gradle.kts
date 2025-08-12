@@ -11,6 +11,10 @@ repositories {
 }
 
 dependencies {
+    api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
+    api("org.jetbrains.kotlinx:kotlinx-serialization-properties:1.9.0")
+    api("net.peanuuutz.tomlkt:tomlkt:0.5.0")
+    api("com.charleskorn.kaml:kaml:0.85.0")
 }
 
 
