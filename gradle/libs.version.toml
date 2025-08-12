@@ -1,0 +1,24 @@
+# Only update versions when the change is tested thoroughly, to not break any functionality
+
+[versions]
+kotlinx = "1.9.0"
+tomlkt = "0.5.0"
+kaml = "0.87.0"
+dokka = "2.0.0"
+mavenpublish = "0.32.0"
+
+[plugins]
+dokka = { id = "org.jetbrains.dokka", version.ref = "dokka"}
+mavenpublish = { id = "com.vanniktech.maven.publish", version.ref = "mavenpublish"}
+
+[libraries]
+kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinx" }
+kotlinx-serialization-properties = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-properties", version.ref = "kotlinx" }
+# Not actually kotlix serialization but community libraries but implemented in the same way here for ease of use
+kotlinx-serialization-toml = { group = "net.peanuuutz.tomlkt", name = "tomlkt", version.ref = "tomlkt"}
+kotlinx-serialization-yaml = { group = "com.charleskorn.kaml", name = "kaml", version.ref = "tomlkt"}
+
+
+kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kaml" }
+
+dokka-base = { group = "org.jetbrains.dokka", name = "dokka-base", version.ref = "dokka"}
