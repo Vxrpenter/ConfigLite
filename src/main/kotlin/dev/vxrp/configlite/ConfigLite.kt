@@ -15,6 +15,7 @@ val registeredConfigurationObjects = hashMapOf<String, ConfigurationObject>()
 open class ConfigLite {
     companion object Default : ConfigLite()
 
+    @JvmOverloads
     fun register(headDirectory: String, location: String, name: String, type: ConfigType? = null) {
         val configDirectory = Path("$headDirectory$location")
 
@@ -23,6 +24,7 @@ open class ConfigLite {
             fileName = name,
             type = type
         )
+
         val file = Path("$configDirectory/$name").toFile()
 
         if (configDirectory.notExists()) configDirectory.createDirectories()
