@@ -31,10 +31,6 @@ dependencies {
     api("com.charleskorn.kaml:kaml:0.85.0")
 }
 
-kotlin {
-    jvmToolchain(24)
-}
-
 tasks.getByName("dokkaHtml", DokkaTask::class) {
     dokkaSourceSets.configureEach {
         includes.from("packages.md")
