@@ -1,9 +1,13 @@
 # Updaer
+
+<a href="https://github.com/Vxrpenter/Updater/blob/master/LICENSE"><img src="https://img.shields.io/github/license/Vxrpenter/Updater?style=flat-square&logo=amazoniam&logoSize=amg&logoColor=forestgreen&label=Licenced%20Under&color=077533"/></a>&nbsp;
+<a href="https://vxrpenter.github.io/ConfigLite/"><img src="https://img.shields.io/badge/KDoc-Online-forestgreen?style=flat-square&logo=kotlin&logoSize=amg"/></a>&nbsp;
+
 A lightweight, easy to use, configuration wrapper
 
 ## Installation
 
-<a href=""><img src="https://img.shields.io/maven-central/v/io.github.vxrpenter/config-lite?style=flat-square&logo=apachemaven&logoColor=f18800&color=f18800"></a>
+<a href="https://central.sonatype.com/artifact/io.github.vxrpenter/config-lite"><img src="https://img.shields.io/maven-central/v/io.github.vxrpenter/config-lite?style=flat-square&logo=apachemaven&logoColor=f18800&color=f18800"></a>
 
 ### Gradle
 ```gradle
