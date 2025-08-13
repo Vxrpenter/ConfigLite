@@ -46,7 +46,6 @@ open class ConfigLite {
     }
 
     inline fun <reified T> serializedConfiguration(configurationObject: ConfigurationObject): T? {
-        println("${configurationObject.location}/${configurationObject.fileName}")
         val file = Path("${configurationObject.location}/${configurationObject.fileName}").toFile()
         val fileContents = file.readText()
 
