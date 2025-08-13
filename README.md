@@ -1,4 +1,4 @@
-# Updaer
+# ConfigLite
 
 <a href="https://github.com/Vxrpenter/ConfigLite/blob/master/LICENSE"><img src="https://img.shields.io/github/license/Vxrpenter/Updater?style=flat-square&logo=amazoniam&logoSize=amg&logoColor=forestgreen&label=Licenced%20Under&color=077533"/></a>&nbsp;
 <a href="https://vxrpenter.github.io/ConfigLite/"><img src="https://img.shields.io/badge/KDoc-Online-forestgreen?style=flat-square&logo=kotlin&logoSize=amg"/></a>&nbsp;
