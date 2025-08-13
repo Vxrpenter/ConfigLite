@@ -1,7 +1,7 @@
 package dev.vxrp.configlite
 
 import com.charleskorn.kaml.Yaml
-import dev.vxrp.configlite.exceptions.ResourceNotExisting
+import dev.vxrp.configlite.exceptions.ResourceNotFound
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import net.peanuuutz.tomlkt.Toml
@@ -32,7 +32,7 @@ open class ConfigLite {
             val content = ConfigLite::class.java.getResourceAsStream(contentDirectory)
             file.createNewFile()
 
-            if (content == null) throw ResourceNotExisting("Could not find resource $contentDirectory")
+            if (content == null) throw ResourceNotFound("Could not find resource $contentDirectory")
             file.appendBytes(content.readAllBytes())
         }
     }
