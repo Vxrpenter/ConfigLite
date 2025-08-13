@@ -10,7 +10,7 @@ import kotlin.io.path.Path
 import kotlin.io.path.createDirectories
 import kotlin.io.path.notExists
 
-val registeredConfigurationObjects = mutableListOf<ConfigurationObject>()
+val registeredConfigurationObjects = hashMapOf<String, ConfigurationObject>()
 
 open class ConfigLite {
     companion object Default : ConfigLite()
@@ -18,11 +18,11 @@ open class ConfigLite {
     fun register(headDirectory: String, location: String, name: String, type: ConfigType? = null) {
         val configDirectory = Path("$headDirectory$location")
 
-        registeredConfigurationObjects.add(ConfigurationObject(
+        registeredConfigurationObjects[name] = ConfigurationObject(
             location = configDirectory,
             fileName = name,
             type = type
-        ))
+        )
         val file = Path("$configDirectory/$name").toFile()
 
         if (configDirectory.notExists()) configDirectory.createDirectories()
@@ -38,13 +38,9 @@ open class ConfigLite {
     }
 
     inline fun <reified T> load(name: String): T? {
-        for (configuration in registeredConfigurationObjects) {
-            if (configuration.fileName != name) continue
+        val configuration = registeredConfigurationObjects[name] ?: return null
 
-            return serializedConfiguration<T>(configuration)
-        }
-
-        return null
+        return serializedConfiguration<T>(configuration)
     }
 
     inline fun <reified T> serializedConfiguration(configurationObject: ConfigurationObject): T? {
