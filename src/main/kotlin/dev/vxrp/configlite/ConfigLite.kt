@@ -15,6 +15,16 @@ val registeredConfigurationObjects = hashMapOf<String, ConfigurationObject>()
 open class ConfigLite {
     companion object Default : ConfigLite()
 
+    /**
+     * Registering a configuration marks a configuration file as active.
+     * It then gets created and populated, with a key being stored for access to the configuration file.
+     *
+     * @param headDirectory The head directory on the targeted system
+     * @param location Where should the configuration be created (excluded [headDirectory])
+     * @param name The filename of the configuration
+     * @param type The type of the configuration (optional)
+     * @throws kotlinx.serialization.SerializationException
+     */
     @JvmOverloads
     fun register(headDirectory: String, location: String, name: String, type: ConfigType? = null) {
         val configDirectory = Path("$headDirectory$location")
@@ -32,13 +42,22 @@ open class ConfigLite {
             var contentDirectory = name
             location.isBlank().let { contentDirectory = "$location/$name" }
             val content = ConfigLite::class.java.getResourceAsStream(contentDirectory)
-            file.createNewFile()
+                ?: throw ResourceNotFound("Could not find resource $contentDirectory")
 
-            if (content == null) throw ResourceNotFound("Could not find resource $contentDirectory")
+            file.createNewFile()
             file.appendBytes(content.readAllBytes())
         }
     }
 
+    /**
+     * Loads the configuration using the entered configuration class [T] by retrieving it's file from the
+     * [register]'ed configurations.
+     *
+     * @param T The configuration's serialization class
+     * @param name The filename of the configuration
+     * @return The serialized configuration object
+     * @throws kotlinx.serialization.SerializationException
+     */
     inline fun <reified T> load(name: String): T? {
         val configuration = registeredConfigurationObjects[name] ?: return null
 
