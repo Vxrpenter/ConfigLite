@@ -1,11 +1,13 @@
 package dev.vxrp.configlite
 
 import com.charleskorn.kaml.Yaml
-import dev.vxrp.configlite.exceptions.ResourceNotFound
+import dev.vxrp.configlite.exceptions.RegisteredObjectNotFoundException
+import dev.vxrp.configlite.exceptions.ResourceNotFoundException
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import net.peanuuutz.tomlkt.Toml
 import net.peanuuutz.tomlkt.decodeFromString
+import java.io.FileNotFoundException
 import kotlin.io.path.Path
 import kotlin.io.path.createDirectories
 import kotlin.io.path.notExists
@@ -42,7 +44,7 @@ open class ConfigLite {
             var contentDirectory = name
             location.isBlank().let { contentDirectory = "$location/$name" }
             val content = ConfigLite::class.java.getResourceAsStream(contentDirectory)
-                ?: throw ResourceNotFound("Could not find resource $contentDirectory")
+                ?: throw ResourceNotFoundException("Could not find resource $contentDirectory")
 
             file.createNewFile()
             file.appendBytes(content.readAllBytes())
@@ -50,21 +52,22 @@ open class ConfigLite {
     }
 
     /**
-     * Loads the configuration using the entered configuration class [T] by retrieving it's file from the
+     * Loads the configuration using the entered configuration class [T] by retrieving its file from the
      * [register]'ed configurations.
      *
      * @param T The configuration's serialization class
      * @param name The filename of the configuration
      * @return The serialized configuration object
      * @throws kotlinx.serialization.SerializationException
+     * @throws RegisteredObjectNotFoundException
      */
-    inline fun <reified T> load(name: String): T? {
-        val configuration = registeredConfigurationObjects[name] ?: return null
+    inline fun <reified T> load(name: String): T {
+        val configuration = registeredConfigurationObjects[name] ?: throw RegisteredObjectNotFoundException("Could not find configuration file $name in registered configuration objects $registeredConfigurationObjects")
 
         return serializedConfiguration<T>(configuration)
     }
 
-    inline fun <reified T> serializedConfiguration(configurationObject: ConfigurationObject): T? {
+    inline fun <reified T> serializedConfiguration(configurationObject: ConfigurationObject): T {
         val file = Path("${configurationObject.location}/${configurationObject.fileName}").toFile()
         val fileContents = file.readText()
 
@@ -78,7 +81,7 @@ open class ConfigLite {
             ConfigType.JSON -> decodeJson(fileContents)
             ConfigType.YAML -> decodeYaml(fileContents)
             ConfigType.TOML -> decodeToml(fileContents)
-            null -> null
+            null -> throw FileNotFoundException("Could not find configuration at $file")
         }
     }
 
